@@ -13,6 +13,6 @@ improvement areas
  - Can make Calender util for date related logic
  - Can handle different type of data like image, video
 
- 
+
 
 
