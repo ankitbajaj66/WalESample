@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.walesample.apod.domain.APODData
 import java.lang.ref.WeakReference
 
-private const val DB_NAME = "movies_db"
+private const val DB_NAME = "apod_db"
 
 @Database(entities = [APODData::class], version = 1)
 abstract class APODDatabase : RoomDatabase() {

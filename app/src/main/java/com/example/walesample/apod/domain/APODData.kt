@@ -10,6 +10,7 @@ class APODData(
     var title: String,
     var description: String,
     var bitmapPath: String,
+    var mediaType: String,
     var date: Long = -1,
     var oldDate: Boolean = false
 ) {
@@ -20,7 +21,12 @@ class APODData(
     companion object {
         // Get the required field from Josn
         fun fromJson(jsonInput: String) = JSONObject(jsonInput).run {
-            APODData(optString("title"), optString("explanation"), optString("url"))
+            APODData(
+                title = optString("title"),
+                description = optString("explanation"),
+                bitmapPath = optString("url"),
+                mediaType = optString("media_type")
+            )
         }
     }
 }

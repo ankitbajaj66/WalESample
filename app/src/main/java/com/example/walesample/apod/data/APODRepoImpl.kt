@@ -12,21 +12,28 @@ class APODRepoImpl private constructor(
     private val remoteDataSource: RemoteDataSource
 ) : APODRepo {
     override suspend fun getAPODData(): ResponseWrapper<APODData> {
-        var data: APODData? = localDataSource.getData()
+        val data: APODData? = localDataSource.getData()
 
         return if (data == null) {
+            // If data is not present in local DB then make service call
             getNetworkResponse()
         } else {
+            // If data is present in local DB but date changed then make service call
             if (checkForDataChange(data.date)) {
                 getNetworkResponse(true)
             } else {
+                // If data is present in local DB and same date then use local DB
                 getDbResponse(data)
             }
         }
     }
 
+    /**
+     * This Method is making network call to get the data and save in local DB
+     * isDateChanged - to capture date changed
+     */
     private suspend fun getNetworkResponse(isDateChanged: Boolean = false): ResponseWrapper<APODData> {
-        var data: APODData?
+        val data: APODData?
         var remoteResponse: ResponseWrapper<APODData> = remoteDataSource.getAPODData()
 
         when (remoteResponse) {
@@ -36,6 +43,8 @@ class APODRepoImpl private constructor(
 
                 // Save current date in object
                 data.date = System.currentTimeMillis()
+
+                localDataSource.saveData(data)
             }
             else -> {
                 remoteResponse =
@@ -45,11 +54,17 @@ class APODRepoImpl private constructor(
         return remoteResponse
     }
 
+    /**
+     * This Method is used to get the data from local DB
+     */
     private fun getDbResponse(data: APODData?): ResponseWrapper<APODData> {
         return if (data != null) ResponseWrapper.Success(data)
         else ResponseWrapper.Error(Exception())
     }
 
+    /**
+     * This Method is used to check date changed
+     */
     private fun checkForDataChange(storedTme: Long): Boolean {
         val currentDateCalender = Calendar.getInstance()
 

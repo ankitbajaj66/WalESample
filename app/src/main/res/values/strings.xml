@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WalESample</string>
+    <string name="internet_error">"We are not connected to the internet, showing you the last image we have."</string>
 </resources>

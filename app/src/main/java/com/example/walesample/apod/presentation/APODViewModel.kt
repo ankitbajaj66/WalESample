@@ -1,6 +1,5 @@
 package com.example.walesample.apod.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,16 +14,19 @@ class APODViewModel(private val apodRepo: APODRepo) : ViewModel() {
     val apod: LiveData<UIViewState> = _apod
 
     init {
-        Log.e("APODViewModel", "Ankit init called")
+        // Making service here to avoid service call on screen rotation
         getData()
     }
 
     private fun getData() {
+
+        // Updating Progress state to view
         _apod.value = ProgressState
 
         viewModelScope.launch(Dispatchers.IO) {
             var result = apodRepo.getAPODData()
 
+            // Updating service status to view
             _apod.postValue(
                 when (result) {
                     is ResponseWrapper.Success -> SuccessState(result.data)

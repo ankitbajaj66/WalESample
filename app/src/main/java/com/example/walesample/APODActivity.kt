@@ -17,6 +17,7 @@ import com.example.walesample.apod.presentation.APODViewModel
 import com.example.walesample.apod.presentation.ErrorState
 import com.example.walesample.apod.presentation.ProgressState
 import com.example.walesample.apod.presentation.SuccessState
+import com.example.walesample.apod.util.AppConstants
 import kotlinx.android.synthetic.main.activity_apod.*
 import java.io.File
 import java.io.FileInputStream
@@ -85,7 +86,7 @@ class APODActivity : AppCompatActivity() {
 
     private fun loadImage(bitmapPath: String) {
         try {
-            val file = File(bitmapPath, "apod_img.jpg")
+            val file = File(bitmapPath, AppConstants.IMG_NAME)
             val b = BitmapFactory.decodeStream(FileInputStream(file))
             img_view.setImageBitmap(b)
         } catch (e: FileNotFoundException) {
@@ -94,6 +95,6 @@ class APODActivity : AppCompatActivity() {
     }
 
     private fun notifyUserAboutOldData() {
-        Toast.makeText(this, "", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(R.string.internet_error), Toast.LENGTH_LONG).show()
     }
 }
