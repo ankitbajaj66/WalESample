@@ -13,7 +13,7 @@ import java.lang.ref.WeakReference
 import java.net.HttpURLConnection
 import java.net.URL
 
-private const val API_URL = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY"
+private const val API_URL = "https://api.nasa.gov/planetary/apod?api_key=GEr6WC7IMh8oJlhfk7HuFqLxmFrjFMLgXz6DNglp"
 
 class RemoteDataSourceImpl private constructor(private val context: WeakReference<Activity>) :
     RemoteDataSource {
