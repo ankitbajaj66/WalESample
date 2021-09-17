@@ -16,6 +16,5 @@ class LocalDataSourceImpl private constructor(private val apodDao: APODDao) : Lo
         fun getInstance(apodDao: APODDao) = instance ?: synchronized(this) {
             instance ?: LocalDataSourceImpl(apodDao).also { instance = it }
         }
-
     }
 }
